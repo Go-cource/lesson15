@@ -7,14 +7,24 @@ import (
 	"time"
 )
 
+type NewData struct {
+	Article string
+	Message string
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+
 	MainText := fmt.Sprintf("Это мой первый сайт!!\n Всем привет \nВремя: %v", time.Now().Format("02-01-06 15:04:05"))
+	data := NewData{
+		Article: MainText,
+		Message: "This is new message",
+	}
 	//http.ServeFile(w, r, "./static/page.html")
 	tmpl, err := template.ParseFiles("./static/page.html")
 	if err != nil {
 		fmt.Println(err)
 	}
-	tmpl.Execute(w, MainText)
+	tmpl.Execute(w, data)
 }
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
