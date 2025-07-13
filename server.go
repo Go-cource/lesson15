@@ -6,11 +6,11 @@ import (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Index Page")
+	http.ServeFile(w, r, "./static/page.html")
 }
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "About Page")
+	http.ServeFile(w, r, "./static/about.html")
 }
 
 func ContactsHandler(w http.ResponseWriter, r *http.Request) {
