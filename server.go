@@ -13,6 +13,11 @@ type NewData struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	MainText := fmt.Sprintf("Это мой первый сайт!!\n Всем привет \nВремя: %v", time.Now().Format("02-01-06 15:04:05"))
 	data := NewData{
 		Article: MainText,
@@ -33,16 +38,14 @@ func AboutHandler(w http.ResponseWriter, r *http.Request) {
 func ContactsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Contacts Page")
 }
-func ContactsHandler123(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Contacts Page")
-}
 
 func main() {
 
-	http.HandleFunc("/", IndexHandler)
-	http.HandleFunc("/about", AboutHandler)
-	http.HandleFunc("/contacts", ContactsHandler)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", IndexHandler)
+	mux.HandleFunc("/about", AboutHandler)
+	mux.HandleFunc("/about/contacts/", ContactsHandler)
 
 	fmt.Println("Server is listening...")
-	http.ListenAndServe("127.0.0.1:8080", nil)
+	http.ListenAndServe("127.0.0.1:8080", mux)
 }
