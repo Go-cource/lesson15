@@ -13,7 +13,6 @@ type NewData struct {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-
 	MainText := fmt.Sprintf("Это мой первый сайт!!\n Всем привет \nВремя: %v", time.Now().Format("02-01-06 15:04:05"))
 	data := NewData{
 		Article: MainText,
@@ -32,6 +31,9 @@ func AboutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ContactsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Contacts Page")
+}
+func ContactsHandler123(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Contacts Page")
 }
 
