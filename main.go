@@ -47,12 +47,19 @@ func ReadFile(fileName string) (string, error) {
 func main() {
 	_, err := ReadFile("config.txt")
 	if err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			//упустим функционал
-			fmt.Println("File Created.")
-		} else {
-			fmt.Println("такой ошибки не знаю и не обрабатываю: ", err)
-			os.Exit(1)
+		// if errors.Is(err, os.ErrNotExist) {
+
+		// 	fmt.Println("File Created.")
+		// } else {
+		// 	fmt.Println("такой ошибки не знаю и не обрабатываю: ", err)
+		// 	os.Exit(1)
+		// }
+		var myErr *TimeError
+		if errors.As(err, &myErr) {
+			fmt.Println(myErr.Error())
+			fmt.Println(myErr.Err)
+			fmt.Println(myErr.Time)
+
 		}
 
 	}
