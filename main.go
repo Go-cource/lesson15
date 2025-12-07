@@ -13,7 +13,7 @@ import (
 // error
 type TimeError struct {
 	Time time.Time
-	Err  error
+	Err  error //io.EOF
 }
 
 func (te *TimeError) Error() string {
@@ -40,11 +40,20 @@ func ReadFile(fileName string) (string, error) {
 	return string(data), nil
 }
 
+// func Is(err, target error) bool {}
+// io.EOF
+// err == io.EOF - fail
+
 func main() {
 	_, err := ReadFile("config.txt")
 	if err != nil {
-		fmt.Println(err) //с временем
-		fmt.Printf("Изначальная ошибка: %v\n", errors.Unwrap(err))
-		os.Exit(1)
+		if errors.Is(err, os.ErrNotExist) {
+			//упустим функционал
+			fmt.Println("File Created.")
+		} else {
+			fmt.Println("такой ошибки не знаю и не обрабатываю: ", err)
+			os.Exit(1)
+		}
+
 	}
 }
