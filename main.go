@@ -29,11 +29,15 @@ func NewTimeError(err error) error {
 func ReadFile(fileName string) (string, error) {
 	data, err := os.ReadFile(fileName) //err = os.FileNotExist = "Error file not Exist"
 	if err != nil {
-		return "", err // TimeError {Time: 11:26, err: os.FileNotExist}
+		return "", NewTimeError(err) // TimeError {Time: 11:26, err: os.FileNotExist}
 	}
 	return string(data), nil
 }
 
 func main() {
-
+	_, err := ReadFile("config.txt")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
